@@ -32,6 +32,7 @@
     "@payloadcms/plugin-nested-docs": "3.61.0",
     "@payloadcms/plugin-redirects": "3.61.0",
     "@payloadcms/plugin-search": "3.61.0",
+    "@payloadcms/live-preview-react": "3.61.0",
     "@payloadcms/plugin-seo": "3.61.0",
     "@payloadcms/richtext-lexical": "3.61.0",
     "@payloadcms/storage-r2": "3.61.0",
