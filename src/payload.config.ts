@@ -1,6 +1,5 @@
 // storage-adapter-import-placeholder
 import { sqliteD1Adapter } from '@payloadcms/db-d1-sqlite' // database-adapter-import
-import sharp from 'sharp'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -75,7 +74,6 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  sharp,
   // database-adapter-config-start
   db: sqliteD1Adapter({ binding: cloudflare.env.D1 }),
   // database-adapter-config-end
