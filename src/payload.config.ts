@@ -1,6 +1,5 @@
 // storage-adapter-import-placeholder
 import { sqliteD1Adapter } from '@payloadcms/db-d1-sqlite' // database-adapter-import
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -8,8 +7,17 @@ import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
 import { r2Storage } from '@payloadcms/storage-r2'
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
+import { plugins } from '@/plugins'
+import { defaultLexical } from '@/fields/defaultLexical'
+
+import { Pages } from '@/collections/Pages'
+import { Users } from '@/collections/Users'
+import { Media } from '@/collections/Media'
+import { Posts } from '@/collections/Posts'
+import { Categories } from '@/collections/Categories'
+
+import { Header } from '@/Header/config'
+import { Footer } from '@/Footer/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,12 +35,13 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
-  editor: lexicalEditor(),
+  collections: [Users, Media, Pages, Posts, Categories],
+  globals: [Header, Footer],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  editor: defaultLexical,
   // database-adapter-config-start
   db: sqliteD1Adapter({ binding: cloudflare.env.D1 }),
   // database-adapter-config-end
@@ -42,6 +51,7 @@ export default buildConfig({
       bucket: cloudflare.env.R2,
       collections: { media: true },
     }),
+    ...plugins,
   ],
 })
 
